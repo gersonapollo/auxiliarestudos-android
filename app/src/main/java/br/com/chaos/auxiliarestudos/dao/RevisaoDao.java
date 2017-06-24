@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,13 +42,19 @@ public class RevisaoDao extends SQLiteOpenHelper{
     public void cadastrar(Revisao revisao){
         SQLiteDatabase db = getWritableDatabase();
 
+        ContentValues content = pegaDadosRevisao(revisao);
+
+        db.insert("Revisoes", null, content);
+    }
+
+    @NonNull
+    private ContentValues pegaDadosRevisao(Revisao revisao) {
         ContentValues content = new ContentValues();
 
         content.put("titulo", revisao.getTitulo());
         content.put("notas", revisao.getNotas());
         content.put("dataCriacao", revisao.getDataCriacao().toString());
-
-        db.insert("Revisoes", null, content);
+        return content;
     }
 
     public List<Revisao> listarRevisoes(){
@@ -85,4 +92,11 @@ public class RevisaoDao extends SQLiteOpenHelper{
         db.delete("Revisoes", "id=?", argumentos);
     }
 
+    public void atualizar(Revisao revisao) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        ContentValues content = pegaDadosRevisao(revisao);
+        String[] argumentos = {revisao.getId().toString()};
+        db.update("Revisoes", content, "id=?", argumentos);
+    }
 }

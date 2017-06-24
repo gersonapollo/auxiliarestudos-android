@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.chaos.auxiliarestudos.dao.RevisaoDao;
@@ -24,6 +25,12 @@ public class FormularioRevisaoActivity extends AppCompatActivity {
         setTitle("Cadastrar Assunto");
 
         helper = new FormularioRevisaoHelper(this);
+
+        Revisao revisao = (Revisao) getIntent().getSerializableExtra("revisao");
+        if(revisao != null){
+            helper.preencherRevisao(revisao);
+        }
+
     }
 
     @Override
@@ -40,7 +47,12 @@ public class FormularioRevisaoActivity extends AppCompatActivity {
                 Revisao revisao = helper.getRevisao();
                 revisao.setDataCriacao(new Date(System.currentTimeMillis()));
                 RevisaoDao dao = new RevisaoDao(this);
-                dao.cadastrar(revisao);
+                if(null != revisao.getId()){
+                    dao.atualizar(revisao);
+                }else{
+                    dao.cadastrar(revisao);
+                }
+
 
                 dao.close();
                 finish();

@@ -30,6 +30,18 @@ public class RevisoesActivity extends AppCompatActivity {
 
         listaRevisoes = (ListView) findViewById(R.id.revisoes_lista);
 
+        listaRevisoes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lista, View view, int position, long id) {
+                Revisao revisao = (Revisao) listaRevisoes.getItemAtPosition(position);
+
+                Intent intent = new Intent(RevisoesActivity.this, FormularioRevisaoActivity.class);
+                intent.putExtra("revisao", revisao);
+                startActivity(intent);
+
+            }
+        });
+
         Button botao_adicionar = (Button) findViewById(R.id.revisoes_botao_adicionar);
         botao_adicionar.setOnClickListener(new View.OnClickListener() {
             @Override

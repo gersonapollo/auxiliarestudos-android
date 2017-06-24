@@ -21,7 +21,7 @@ public class FormularioRevisaoHelper {
     public FormularioRevisaoHelper(FormularioRevisaoActivity activity) {
 
         titulo = (EditText) activity.findViewById(R.id.formulario_titulo);
-        notas = (EditText) activity.findViewById(R.id.formulario_titulo);
+        notas = (EditText) activity.findViewById(R.id.formulario_notas);
         revisao = new Revisao();
     }
 
@@ -31,5 +31,12 @@ public class FormularioRevisaoHelper {
         revisao.setNotas(this.notas.getText().toString());
 
         return revisao;
+    }
+
+    public void preencherRevisao(Revisao revisao) {
+        this.titulo.setText(revisao.getTitulo());
+        this.notas.setText(revisao.getNotas());
+
+        this.revisao = revisao;
     }
 }
