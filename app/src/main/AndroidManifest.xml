@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.chaos.auxiliarestudos">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,12 +14,17 @@
         <activity android:name=".TecnicasEstudoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".RevisoesActivity" />
-        <activity android:name=".FormularioRevisaoActivity"></activity>
+        <activity android:name=".FormularioRevisaoActivity"
+                android:parentActivityName=".RevisoesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RevisoesActivity"/>
+
+        </activity>
     </application>
 
 </manifest>
